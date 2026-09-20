@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Comandos — Kiro</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #080b14;
+            color: white;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+        }
+
+        header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #1b2740;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: bold;
+            color: #4da3ff;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 12px;
+            color: #aab4c8;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back:hover {
+            color: #4da3ff;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: #4da3ff;
+        }
+
+        .hero p {
+            color: #aab4c8;
+            font-size: 17px;
+            line-height: 1.6;
+            max-width: 650px;
+            margin: auto;
+        }
+
+        .commands {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .category {
+            margin-bottom: 35px;
+        }
+
+        .category h2 {
+            color: #4da3ff;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .command {
+            background: #101625;
+            border: 1px solid #1d2b45;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 10px;
+        }
+
+        .command-name {
+            font-weight: bold;
+            font-size: 17px;
+            color: white;
+        }
+
+        .command-name span {
+            color: #4da3ff;
+        }
+
+        .description {
+            color: #8995aa;
+            margin-top: 6px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 35px 20px;
+            color: #68748a;
+            border-top: 1px solid #1b2740;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <div class="logo">🐱 Kiro</div>
+
+        <a href="index.html" class="back">
+            ← Volver al inicio
+        </a>
+
+    </header>
+
+    <section class="hero">
+
+        <h1>
+            Comandos de <span>Kiro</span>
+        </h1>
+
+        <p>
+            Explora las herramientas que Kiro ofrece
+            para ayudarte a construir y administrar tu comunidad.
+        </p>
+
+    </section>
+
+    <main class="commands">
+
+        <section class="category">
+
+            <h2>🛡️ Moderación</h2>
+
+            <div class="command">
+                <div class="command-name">
+                    <span>/</span>warn
+                </div>
+                <div class="description">
+                    Advierte a un miembro del servidor.
+                </div>
+            </div>
+
+            <div class="command">
+                <div class="command-name">
+                    <span>/</span>mute
+                </div>
+                <div class="description">
+                    Restringe temporalmente a un miembro.
+                </div>
+            </div>
+
+            <div class="command">
+                <div class="command-name">
+                    <span>/</span>kick
+                </div>
+                <div class="description">
+                    Expulsa a un miembro del servidor.
+                </div>
+            </div>
+
+            <div class="command">
+                <div class="command-name">
+                    <span>/</span>ban
+                </div>
+                <div class="description">
+                    Banea a un miembro del servidor.
+                </div>
+            </div>
+
+        </section>
+
+
+        <section class="category">
+
+            <h2>💰 Economía</h2>
+
+            <div class="command">
+                <div class="command-name">
+                    <span>/</span>balance
+                </div>
+                <div class="description">
+                    Consulta tu saldo.
+                </div>
+            </div>
+
+            <div class="command">
+                <div class="command-name">
+                    <span>/</span>daily
+                </div>
+                <div class="description">
+                    Reclama tu recompensa diaria.
+                </div>
+            </div>
+
+            <div class="command">
+                <div class="command-name">
+                    <span>/</span>work
+                </div>
+                <div class="description">
+                    Trabaja para conseguir dinero.
+                </div>
+            </div>
+
+            <div class="command">
+                <div class="command-name">
+                    <span>/</span>pay
+                </div>
+                <div class="description">
+                    Envía dinero a otro miembro.
+                </div>
+            </div>
+
+        </section>
+
+
+        <section class="category">
+
+            <h2>🎫 Tickets</h2>
+
+            <div class="command">
+                <div class="command-name">
+                    <span>/</span>ticket
+                </div>
+                <div class="description">
+                    Abre un ticket de soporte.
+                </div>
+            </div>
+
+            <div class="command">
+                <div class="command-name">
+                    <span>/</span>ticket-panel
+                </div>
+                <div class="description">
+                    Crea un panel de tickets.
+                </div>
+            </div>
+
+        </section>
+
+
+        <section class="category">
+
+            <h2>ℹ️ Información</h2>
+
+            <div class="command">
+                <div class="command-name">
+                    <span>/</span>help
+                </div>
+                <div class="description">
+                    Muestra la ayuda de Kiro.
+                </div>
+            </div>
+
+            <div class="command">
+                <div class="command-name">
+                    <span>/</span>botinfo
+                </div>
+                <div class="description">
+                    Muestra información sobre Kiro.
+                </div>
+            </div>
+
+            <div class="command">
+                <div class="command-name">
+                    <span>/</span>serverinfo
+                </div>
+                <div class="description">
+                    Muestra información del servidor.
+                </div>
+            </div>
+
+            <div class="command">
+                <div class="command-name">
+                    <span>/</span>userinfo
+                </div>
+                <div class="description">
+                    Muestra información de un usuario.
+                </div>
+            </div>
+
+        </section>
+
+
+        <section class="category">
+
+            <h2>🎮 Diversión</h2>
+
+            <div class="command">
+                <div class="command-name">
+                    <span>/</span>8ball
+                </div>
+                <div class="description">
+                    Pregunta algo y deja que Kiro responda.
+                </div>
+            </div>
+
+            <div class="command">
+                <div class="command-name">
+                    <span>/</span>coinflip
+                </div>
+                <div class="description">
+                    Lanza una moneda.
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        🐱 Kiro — Tu servidor. Tus reglas. Kiro te acompaña.
+    </footer>
+
+</body>
+</html>

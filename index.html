@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Kiro — Discord Bot</title>
+    <title>Kiro 🐱 — Tu compañero para Discord</title>
 
     <style>
         * {
@@ -14,56 +14,71 @@
         }
 
         body {
-            background: #080b14;
+            background-color: #080b14;
+
+            background-image:
+                linear-gradient(
+                    rgba(8, 11, 20, 0.55),
+                    rgba(8, 11, 20, 0.75)
+                ),
+                url("fondo-kiro.png");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
             color: white;
             font-family: Arial, sans-serif;
             min-height: 100vh;
         }
 
         header {
-            padding: 20px;
             text-align: center;
-            border-bottom: 1px solid #1b2740;
+            padding: 40px 20px 20px;
         }
 
         .logo {
-            font-size: 32px;
+            font-size: 48px;
             font-weight: bold;
-            color: #4da3ff;
+            color: #60a5fa;
+            text-shadow: 0 0 20px rgba(96, 165, 250, 0.6);
+        }
+
+        .subtitle {
+            margin-top: 8px;
+            color: #cbd5e1;
+            font-size: 16px;
         }
 
         .hero {
-            min-height: 75vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             text-align: center;
-            padding: 30px 20px;
+            max-width: 850px;
+            margin: 60px auto;
+            padding: 20px;
         }
 
         .hero h1 {
             font-size: 48px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .hero h1 span {
-            color: #4da3ff;
+            color: #60a5fa;
         }
 
         .hero p {
-            color: #aab4c8;
+            color: #cbd5e1;
             font-size: 18px;
-            max-width: 600px;
             line-height: 1.6;
             margin-bottom: 30px;
         }
 
         .buttons {
             display: flex;
+            justify-content: center;
             gap: 15px;
             flex-wrap: wrap;
-            justify-content: center;
         }
 
         .button {
@@ -73,9 +88,8 @@
             font-weight: bold;
             border: 2px solid #86efac;
             transition: 0.2s;
+            display: inline-block;
         }
-
-        /* 🟢 AÑADIR KIRO */
 
         .primary {
             background: #22c55e;
@@ -89,8 +103,6 @@
             transform: translateY(-2px);
         }
 
-        /* 🟣 VER COMANDOS */
-
         .secondary {
             background: #7c3aed;
             color: white;
@@ -103,58 +115,79 @@
             transform: translateY(-2px);
         }
 
-        /* Efecto al tocar/clickear */
-
         .button:active {
             transform: scale(0.96);
         }
 
         .features {
-            padding: 50px 20px;
             max-width: 1000px;
-            margin: auto;
-        }
+            margin: 70px auto;
+            padding: 20px;
 
-        .features h2 {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 30px;
-        }
-
-        .cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(250px, 1fr)
+            );
+
+            gap: 20px;
         }
 
         .card {
-            background: #101625;
-            border: 1px solid #1d2b45;
-            border-radius: 14px;
+            background: rgba(10, 15, 30, 0.78);
+            border: 1px solid rgba(96, 165, 250, 0.25);
+            border-radius: 15px;
             padding: 25px;
-            text-align: center;
+            backdrop-filter: blur(8px);
+
+            transition: 0.2s;
         }
 
-        .card .icon {
-            font-size: 30px;
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(96, 165, 250, 0.6);
+            box-shadow: 0 0 25px rgba(96, 165, 250, 0.15);
+        }
+
+        .card h2 {
             margin-bottom: 10px;
-        }
-
-        .card h3 {
-            margin-bottom: 8px;
+            font-size: 22px;
         }
 
         .card p {
-            color: #8995aa;
-            font-size: 14px;
+            color: #cbd5e1;
+            line-height: 1.5;
         }
 
         footer {
             text-align: center;
-            padding: 30px 20px;
-            color: #68748a;
-            border-top: 1px solid #1b2740;
-            margin-top: 40px;
+            padding: 40px 20px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+
+            .logo {
+                font-size: 40px;
+            }
+
+            .hero {
+                margin: 40px auto;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .button {
+                width: 100%;
+                max-width: 280px;
+            }
         }
     </style>
 </head>
@@ -162,30 +195,46 @@
 <body>
 
     <header>
-        <div class="logo">🐱 Kiro</div>
+
+        <div class="logo">
+            🐱 Kiro
+        </div>
+
+        <div class="subtitle">
+            El compañero multifunción de Discord
+        </div>
+
     </header>
+
 
     <section class="hero">
 
         <h1>
-            Tu servidor.<br>
+            Tu servidor.
             <span>Tus reglas.</span>
         </h1>
 
         <p>
-            Kiro es el compañero multifunción de Discord.
-            Moderación, economía, tickets, diversión y mucho más,
-            todo en un solo bot.
+            Haz crecer tu comunidad con Kiro, un bot multifunción
+            creado para acompañarte en cada etapa.
+            Economía, moderación, tickets, diversión y mucho más.
         </p>
+
 
         <div class="buttons">
 
-            <a href="https://discord.com/oauth2/authorize?client_id=1535161459347169311&scope=bot%20applications.commands&permissions=0"
-               class="button primary">
+            <a
+                href="https://discord.com/oauth2/authorize?client_id=1535161459347169311&scope=bot%20applications.commands&permissions=0"
+                class="button primary"
+            >
                 Añadir Kiro
             </a>
 
-            <a href="commands.html" class="button secondary">
+
+            <a
+                href="commands.html"
+                class="button secondary"
+            >
                 Ver comandos
             </a>
 
@@ -193,54 +242,87 @@
 
     </section>
 
+
     <section class="features">
 
-        <h2>Todo lo que tu comunidad necesita</h2>
+        <div class="card">
 
-        <div class="cards">
+            <h2>🛡️ Moderación</h2>
 
-            <div class="card">
-                <div class="icon">🛡️</div>
-                <h3>Moderación</h3>
-                <p>Herramientas para mantener tu servidor organizado.</p>
-            </div>
+            <p>
+                Herramientas para mantener tu servidor
+                organizado y seguro.
+            </p>
 
-            <div class="card">
-                <div class="icon">🎫</div>
-                <h3>Tickets</h3>
-                <p>Sistema de soporte para tu comunidad.</p>
-            </div>
+        </div>
 
-            <div class="card">
-                <div class="icon">💰</div>
-                <h3>Economía</h3>
-                <p>Una economía propia para tus miembros.</p>
-            </div>
 
-            <div class="card">
-                <div class="icon">📋</div>
-                <h3>Logs</h3>
-                <p>Registra lo importante de tu servidor.</p>
-            </div>
+        <div class="card">
 
-            <div class="card">
-                <div class="icon">👋</div>
-                <h3>Bienvenidas</h3>
-                <p>Recibe a los nuevos miembros automáticamente.</p>
-            </div>
+            <h2>💰 Economía</h2>
 
-            <div class="card">
-                <div class="icon">🎮</div>
-                <h3>Diversión</h3>
-                <p>Comandos para darle vida a tu comunidad.</p>
-            </div>
+            <p>
+                Crea una economía propia para tu comunidad
+                con dinero, trabajos y recompensas.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>🎫 Tickets</h2>
+
+            <p>
+                Sistema de soporte para que tus usuarios
+                puedan contactar con el equipo.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>📋 Logs</h2>
+
+            <p>
+                Registra eventos importantes de tu servidor
+                de forma organizada.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>👋 Bienvenidas</h2>
+
+            <p>
+                Recibe automáticamente a los nuevos
+                miembros de tu comunidad.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>🎮 Diversión</h2>
+
+            <p>
+                Juegos, sistemas sociales y diferentes
+                funciones para entretener a tu comunidad.
+            </p>
 
         </div>
 
     </section>
 
+
     <footer>
-        🐱 Kiro — Tu servidor. Tus reglas. Kiro te acompaña.
+
+        🐱 Kiro — Tu servidor. Tus reglas. Kiro te acompaña. 🐾
+
     </footer>
 
 </body>

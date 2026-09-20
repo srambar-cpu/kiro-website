@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Actualizaciones | Kiro 🐱</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #080b14 url("fondo-kiro.png") center/cover fixed;
+            color: white;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(8, 11, 20, 0.88);
+            z-index: -1;
+        }
+
+        header {
+            text-align: center;
+            padding: 45px 20px 25px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+            color: #60a5fa;
+        }
+
+        header p {
+            color: #cbd5e1;
+            font-size: 16px;
+        }
+
+        .updates-container {
+            width: 90%;
+            max-width: 850px;
+            margin: auto;
+            padding-bottom: 40px;
+        }
+
+        /* =====================================
+           CUADRO DE ACTUALIZACIÓN
+           ===================================== */
+
+        .update-card {
+            background: rgba(15, 23, 42, 0.92);
+            border: 1px solid #2563eb;
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 18px rgba(37, 99, 235, 0.15);
+        }
+
+        .update-date {
+            color: #60a5fa;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .update-card h2 {
+            margin: 10px 0;
+            font-size: 22px;
+        }
+
+        .update-card p {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .back-button {
+            display: block;
+            width: fit-content;
+            margin: 10px auto 40px;
+            padding: 12px 22px;
+            background: #7c3aed;
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+
+        .back-button:hover {
+            background: #8b5cf6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+
+        <h1>📰 Actualizaciones de Kiro</h1>
+
+        <p>
+            Descubre las novedades, mejoras y nuevas funciones de Kiro.
+        </p>
+
+    </header>
+
+
+    <main class="updates-container">
+
+
+        <!-- =====================================
+             📰 NUEVA ACTUALIZACIÓN
+             
+             Para agregar otra:
+             1. Copia TODO este bloque.
+             2. Pégalo ARRIBA de la actualización anterior.
+             3. Cambia la fecha.
+             4. Cambia el título.
+             5. Cambia la descripción.
+             ===================================== -->
+
+
+        <div class="update-card">
+
+            <span class="update-date">
+                📅 20/09/2026
+            </span>
+
+            <h2>
+                🐱 Creación de Kiro
+            </h2>
+
+            <p>
+                Kiro comienza su desarrollo como un bot multifunción
+                para comunidades de Discord.
+            </p>
+
+        </div>
+
+
+        <!-- =====================================
+             EJEMPLO DE OTRA ACTUALIZACIÓN
+
+        <div class="update-card">
+
+            <span class="update-date">
+                📅 25/09/2026
+            </span>
+
+            <h2>
+                🚀 Nueva función
+            </h2>
+
+            <p>
+                Aquí escribes lo que se agregó o mejoró en Kiro.
+            </p>
+
+        </div>
+
+        ===================================== -->
+
+
+    </main>
+
+
+    <a href="index.html" class="back-button">
+        ← Volver al inicio
+    </a>
+
+
+    <footer>
+
+        🐱 Kiro — Tu servidor. Tus reglas. Kiro te acompaña. 🐾
+
+    </footer>
+
+
+</body>
+
+</html>

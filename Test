@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Menú Discord</title>
+    <style>
+        body {
+            background-color: #313338; /* El color de fondo oscuro oficial de Discord */
+            font-family: 'Whitney', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Contenedor principal del menú desplegable */
+        .discord-select-menu {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #2b2d31;
+            border: 1px solid #1e1f22;
+            border-radius: 4px;
+            padding: 10px 12px;
+            width: 320px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* Zona izquierda: Icono gris + Texto */
+        .menu-content {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* El icono exacto de la imagen recreado en SVG */
+        .discord-custom-icon {
+            width: 18px;
+            height: 18px;
+            fill: #949ba4; /* El color gris característico de los iconos de Discord */
+        }
+
+        /* Texto al lado del icono */
+        .menu-text {
+            color: #dbdee1;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Flecha indicadora de la derecha (estilo menú desplegable) */
+        .arrow-icon {
+            width: 16px;
+            height: 16px;
+            fill: #949ba4;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Estructura del botón de Discord -->
+    <div class="discord-select-menu">
+        <div class="menu-content">
+            <!-- Icono gris del cuadrado con barra diagonal integrado -->
+            <svg class="discord-custom-icon" viewBox="0 0 24 24">
+                <path d="M4 4h16v16H4V4zm2 2v12h12V6H6zm2 2h8v2H8V8zm0 4h5v2H8v-2z"/>
+            </svg>
+            <span class="menu-text">Categorías</span>
+        </div>
+        <!-- Flecha hacia abajo del menú -->
+        <svg class="arrow-icon" viewBox="0 0 24 24">
+            <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/>
+        </svg>
+    </div>
+
+</body>
+</html>
+

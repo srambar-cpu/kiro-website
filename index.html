@@ -7,6 +7,7 @@
     <title>Kiro 🐱 — Tu compañero para Discord</title>
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -118,6 +119,7 @@
         .button:active {
             transform: scale(0.96);
         }
+
         .documentation-link {
             display: block;
             margin-top: 22px;
@@ -126,6 +128,7 @@
             text-decoration: none;
             font-weight: bold;
         }
+
         .documentation-link:hover {
             color: #93c5fd;
             text-decoration: underline;
@@ -171,23 +174,90 @@
             line-height: 1.5;
         }
 
+
+        /* =====================================
+           🔔 BOTÓN FLOTANTE DE ACTUALIZACIONES
+           ===================================== */
+
+        .floating-bell {
+            position: fixed;
+
+            right: 20px;
+            bottom: 20px;
+
+            width: 68px;
+            height: 68px;
+
+            border-radius: 50%;
+
+            background: rgba(8, 11, 20, 0.92);
+
+            border: 2px solid #2563eb;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            box-shadow:
+                0 0 15px rgba(37, 99, 235, 0.45),
+                0 0 30px rgba(37, 99, 235, 0.2);
+
+            z-index: 1000;
+
+            transition: 0.2s ease;
+        }
+
+        .floating-bell img {
+            width: 54px;
+            height: 54px;
+
+            object-fit: contain;
+        }
+
+        .floating-bell:hover {
+            transform: scale(1.08);
+
+            box-shadow:
+                0 0 20px rgba(37, 99, 235, 0.7),
+                0 0 35px rgba(37, 99, 235, 0.35);
+        }
+
+        .floating-bell:active {
+            transform: scale(0.92);
+        }
+
+
+        /* =====================================
+           FOOTER
+           ===================================== */
+
         footer {
             text-align: center;
             padding: 40px 20px;
             color: #94a3b8;
             font-size: 14px;
+        }
+
         .footer-links {
             margin-bottom: 15px;
         }
+
         .footer-links a {
             color: #60a5fa;
             text-decoration: none;
             font-weight: bold;
+            margin: 0 8px;
         }
+
         .footer-links a:hover {
             color: #93c5fd;
             text-decoration: underline;
         }
+
+
+        /* =====================================
+           📱 MÓVILES
+           ===================================== */
 
         @media (max-width: 600px) {
 
@@ -211,11 +281,28 @@
                 width: 100%;
                 max-width: 280px;
             }
+
+            .floating-bell {
+                width: 60px;
+                height: 60px;
+
+                right: 15px;
+                bottom: 15px;
+            }
+
+            .floating-bell img {
+                width: 48px;
+                height: 48px;
+            }
+
         }
+
     </style>
 </head>
 
+
 <body>
+
 
     <header>
 
@@ -261,9 +348,9 @@
                 Ver comandos
             </a>
 
-            
-
         </div>
+
+
         <a href="docs.html" class="documentation-link">
             📘 Documentación
         </a>
@@ -272,6 +359,7 @@
 
 
     <section class="features">
+
 
         <div class="card">
 
@@ -344,24 +432,51 @@
 
         </div>
 
+
     </section>
 
 
     <footer>
+
+
         <div class="footer-links">
+
             <a href="terms.html">
                 ⚖️ Términos y condiciones
             </a>
+
             <a href="privacy.html">
                 🔐 Política de privacidad
             </a>
-        </div>
-    </p>
 
-        🐱 Kiro — Tu servidor. Tus reglas. Kiro te acompaña. 🐾
-    </p>
+        </div>
+
+
+        <p>
+            🐱 Kiro — Tu servidor. Tus reglas. Kiro te acompaña. 🐾
+        </p>
+
 
     </footer>
+
+
+    <!-- =====================================
+         🔔 CAMPANA DE ACTUALIZACIONES
+         ===================================== -->
+
+    <a
+        href="updates.html"
+        class="floating-bell"
+        title="Actualizaciones de Kiro"
+    >
+
+        <img
+            src="kiro-bell.png"
+            alt="Actualizaciones de Kiro"
+        >
+
+    </a>
+
 
 </body>
 </html>

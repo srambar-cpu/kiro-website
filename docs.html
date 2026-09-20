@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Documentación — Kiro 🐱</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+
+            background-color: #080b14;
+
+            background-image:
+                linear-gradient(
+                    rgba(8, 11, 20, 0.65),
+                    rgba(8, 11, 20, 0.85)
+                ),
+                url("fondo-kiro.png");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+            color: white;
+            font-family: Arial, sans-serif;
+
+            min-height: 100vh;
+        }
+
+
+        header {
+
+            text-align: center;
+
+            padding: 45px 20px 25px;
+        }
+
+
+        .logo {
+
+            font-size: 44px;
+            font-weight: bold;
+
+            color: #60a5fa;
+
+            text-shadow:
+                0 0 20px rgba(96, 165, 250, 0.6);
+        }
+
+
+        .subtitle {
+
+            margin-top: 8px;
+
+            color: #cbd5e1;
+
+            font-size: 16px;
+        }
+
+
+        .container {
+
+            max-width: 1000px;
+
+            margin: 30px auto;
+
+            padding: 20px;
+        }
+
+
+        .intro {
+
+            text-align: center;
+
+            margin-bottom: 40px;
+        }
+
+
+        .intro h1 {
+
+            font-size: 38px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .intro h1 span {
+
+            color: #60a5fa;
+        }
+
+
+        .intro p {
+
+            color: #cbd5e1;
+
+            font-size: 17px;
+
+            line-height: 1.6;
+        }
+
+
+        .section {
+
+            background: rgba(10, 15, 30, 0.82);
+
+            border: 1px solid rgba(96, 165, 250, 0.25);
+
+            border-radius: 15px;
+
+            padding: 25px;
+
+            margin-bottom: 20px;
+
+            backdrop-filter: blur(8px);
+        }
+
+
+        .section h2 {
+
+            color: #60a5fa;
+
+            margin-bottom: 15px;
+
+            font-size: 24px;
+        }
+
+
+        .section p {
+
+            color: #cbd5e1;
+
+            line-height: 1.6;
+
+            margin-bottom: 12px;
+        }
+
+
+        .command {
+
+            background: rgba(15, 23, 42, 0.8);
+
+            border-left: 4px solid #60a5fa;
+
+            padding: 12px 15px;
+
+            margin: 10px 0;
+
+            border-radius: 8px;
+
+            color: #e2e8f0;
+        }
+
+
+        .command strong {
+
+            color: #93c5fd;
+        }
+
+
+        .back {
+
+            display: block;
+
+            width: fit-content;
+
+            margin: 35px auto;
+
+            padding: 12px 22px;
+
+            border-radius: 10px;
+
+            background: #7c3aed;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+
+        .back:hover {
+
+            background: #a78bfa;
+
+            transform: translateY(-2px);
+        }
+
+
+        footer {
+
+            text-align: center;
+
+            padding: 35px 20px;
+
+            color: #94a3b8;
+
+            font-size: 14px;
+        }
+
+
+        @media (max-width: 600px) {
+
+            .logo {
+                font-size: 38px;
+            }
+
+            .intro h1 {
+                font-size: 30px;
+            }
+
+            .intro p {
+                font-size: 16px;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        🐱 Kiro
+    </div>
+
+    <div class="subtitle">
+        Documentación oficial
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <section class="intro">
+
+        <h1>
+            Documentación de
+            <span>Kiro</span>
+        </h1>
+
+        <p>
+            Aprende a utilizar y configurar las diferentes
+            funciones de Kiro para tu servidor de Discord.
+        </p>
+
+    </section>
+
+
+    <section class="section">
+
+        <h2>🐱 ¿Qué es Kiro?</h2>
+
+        <p>
+            Kiro es un bot multifunción para Discord diseñado
+            para ayudar a las comunidades a administrar,
+            organizar y entretener a sus miembros.
+        </p>
+
+        <p>
+            Puedes utilizar sus sistemas de moderación,
+            economía, tickets, logs, diversión y mucho más.
+        </p>
+
+    </section>
+
+
+    <section class="section">
+
+        <h2>🛡️ Moderación</h2>
+
+        <p>
+            Herramientas para ayudar al equipo de moderación
+            a administrar el servidor.
+        </p>
+
+        <div class="command">
+            <strong>/warn</strong> — Advertir a un usuario.
+        </div>
+
+        <div class="command">
+            <strong>/mute</strong> — Silenciar temporalmente
+            a un usuario.
+        </div>
+
+        <div class="command">
+            <strong>/kick</strong> — Expulsar a un usuario.
+        </div>
+
+        <div class="command">
+            <strong>/ban</strong> — Banear a un usuario.
+        </div>
+
+    </section>
+
+
+    <section class="section">
+
+        <h2>💰 Economía</h2>
+
+        <p>
+            Sistema económico para crear una economía
+            dentro de tu comunidad.
+        </p>
+
+        <div class="command">
+            <strong>/balance</strong> — Consultar tu dinero.
+        </div>
+
+        <div class="command">
+            <strong>/daily</strong> — Reclamar tu recompensa diaria.
+        </div>
+
+        <div class="command">
+            <strong>/work</strong> — Trabajar para obtener dinero.
+        </div>
+
+        <div class="command">
+            <strong>/pay</strong> — Enviar dinero a otro usuario.
+        </div>
+
+    </section>
+
+
+    <section class="section">
+
+        <h2>🎫 Tickets</h2>
+
+        <p>
+            Sistema de soporte para que los miembros
+            puedan contactar con el equipo del servidor.
+        </p>
+
+        <div class="command">
+            <strong>/ticket</strong> — Crear un ticket.
+        </div>
+
+        <div class="command">
+            <strong>/ticket-panel</strong> — Crear un panel
+            de tickets.
+        </div>
+
+    </section>
+
+
+    <section class="section">
+
+        <h2>ℹ️ Información</h2>
+
+        <p>
+            Consulta información sobre Kiro,
+            el servidor y los usuarios.
+        </p>
+
+        <div class="command">
+            <strong>/help</strong> — Mostrar ayuda y comandos.
+        </div>
+
+        <div class="command">
+            <strong>/botinfo</strong> — Información sobre Kiro.
+        </div>
+
+        <div class="command">
+            <strong>/serverinfo</strong> — Información del servidor.
+        </div>
+
+        <div class="command">
+            <strong>/userinfo</strong> — Información de un usuario.
+        </div>
+
+    </section>
+
+
+    <section class="section">
+
+        <h2>🎮 Diversión</h2>
+
+        <p>
+            Funciones para entretener a los miembros
+            de tu comunidad.
+        </p>
+
+        <div class="command">
+            <strong>/8ball</strong> — Pregunta al 8-ball.
+        </div>
+
+        <div class="command">
+            <strong>/coinflip</strong> — Lanza una moneda.
+        </div>
+
+    </section>
+
+
+    <section class="section">
+
+        <h2>⚙️ Configuración</h2>
+
+        <p>
+            Kiro está diseñado para que cada servidor
+            pueda configurar sus funciones según sus
+            propias necesidades.
+        </p>
+
+        <p>
+            Próximamente se añadirán más opciones de
+            configuración y sistemas.
+        </p>
+
+    </section>
+
+
+    <a href="index.html" class="back">
+        ← Volver al inicio
+    </a>
+
+
+</main>
+
+
+<footer>
+
+    🐱 Kiro — Tu servidor. Tus reglas. Kiro te acompaña. 🐾
+
+</footer>
+
+
+</body>
+
+  </html>

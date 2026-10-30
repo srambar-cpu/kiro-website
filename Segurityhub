@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NΞXVORA RP - Acceso Neural</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: #030712;
+            color: #f3f4f6;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Fondo animado de Canvas */
+        #neural-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Contenedor principal estilo HUD Cyberpunk */
+        .hud-container {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 850px;
+            height: 85vh;
+            max-height: 520px;
+            background: rgba(13, 17, 23, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 255, 255, 0.25);
+            border-radius: 16px;
+            box-shadow: 0 0 35px rgba(0, 255, 255, 0.15), inset 0 0 20px rgba(0, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Cabecera del HUD */
+        .hud-header {
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.15);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .server-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .server-title span {
+            color: #00ffff;
+        }
+
+        .hud-status {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.8rem;
+            color: #9ca3af;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
+        }
+
+        /* Cuerpo principal horizontal (Grid o Flex) */
+        .hud-body {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Columna Izquierda: Lore / Info */
+        .hud-sidebar {
+            width: 35%;
+            padding: 25px;
+            border-right: 1px solid rgba(0, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: rgba(0, 255, 255, 0.02);
+        }
+
+        .sidebar-info h3 {
+            font-size: 0.9rem;
+            color: #00ffff;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .sidebar-info p {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .audio-toggle {
+            background: rgba(0, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            color: #00ffff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .audio-toggle:hover {
+            background: rgba(0, 255, 255, 0.15);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+
+        /* Columna Derecha: Formularios */
+        .hud-content {
+            width: 65%;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* Pestañas de Navegación */
+        .tabs-container {
+            display: flex;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            padding: 4px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #9ca3af;
+            padding: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.2), rgba(153, 0, 255, 0.2));
+            color: #00ffff;
+            border: 1px solid rgba(0, 255, 255, 0.4);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+        }
+
+        /* Formularios */
+        .form-panel {
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        .form-panel.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-group label {
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: #00ffff;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper input, .input-wrapper select {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 12px 15px;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .input-wrapper input:focus, .input-wrapper select:focus {
+            border-color: #00ffff;
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.3);
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-container input {
+            accent-color: #00ffff;
+        }
+
+        .link-action {
+            color: #00ffff;
+            text-decoration: none;
+            transition: text-shadow 0.2s;
+        }
+
+        .link-action:hover {
+            text-shadow: 0 0 8px #00ffff;
+        }
+
+        /* Botón de Acción Principal */
+        .btn-submit {
+            background: linear-gradient(135deg, #00ffff, #9900ff);
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            color: #030712;
+            font-weight: 800;
+            font-size: 0.9rem;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            margin-top: 5px;
+        }
+
+        .btn-submit:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 25px rgba(153, 0, 255, 0.6);
+            transform: translateY(-1px);
+        }
+
+        .btn-submit:active {
+            transform: translateY(1px);
+        }
+
+        /* Mensaje de Estado / Terminal Log */
+        .status-terminal {
+            margin-top: auto;
+            font-size: 0.75rem;
+            color: #10b981;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 3px solid #10b981;
+            font-family: monospace;
+        }
+
+        /* Scrollbar personalizado */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fondo interactivo en Canvas -->
+    <canvas id="neural-canvas"></canvas>
+
+    <!-- Contenedor HUD Principal -->
+    <div class="hud-container">
+        <div class="hud-header">
+            <div class="server-title">
+                NΞXVORA <span>RP</span>
+            </div>
+            <div class="hud-status">
+                <div class="status-dot"></div>
+                <span>SECTOR 07 // PING: 24ms</span>
+            </div>
+        </div>
+
+        <div class="hud-body">
+            <!-- Columna Izquierda (Lore & Controles) -->
+            <div class="hud-sidebar">
+                <div class="sidebar-info">
+                    <h3>Terminal de Enlace</h3>
+                    <p>Bienvenido a NΞXVORA RP. Ingrese sus credenciales neurales o registre su expediente para acceder a la red urbana.</p>
+                </div>
+                <button class="audio-toggle" id="audioToggle">
+                    <span>🔊 AUDIO: ON</span>
+                </button>
+            </div>
+
+            <!-- Columna Derecha (Formularios) -->
+            <div class="hud-content">
+                <div class="tabs-container">
+                    <button class="tab-btn active" onclick="switchTab('login')">INICIAR SESIÓN</button>
+                    <button class="tab-btn" onclick="switchTab('register')">REGISTRARSE</button>
+                </div>
+
+                <!-- Panel Login -->
+                <div id="loginPanel" class="form-panel active">
+                    <div class="input-group">
+                        <label>Usuario o Correo Electrónico</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="loginUser" placeholder="Ej: CyberRunner_99">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Clave de Acceso</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="loginPass" placeholder="••••••••••••">
+                        </div>
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox-container">
+                            <input type="checkbox"> Recordar credenciales
+                        </label>
+                        <a href="#" class="link-action" onclick="playClick(); alert('Restauración de clave enviada al enlace neural.');">¿Olvidaste tu clave?</a>
+                    </div>
+                    <button class="btn-submit" onclick="handleLogin()">INGRESAR AL SERVIDOR</button>
+                </div>
+
+                <!-- Panel Registro -->
+                <div id="registerPanel" class="form-panel">
+                    <div class="input-group">
+                        <label>Nombre y Apellido (RP)</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="regUser" placeholder="Ej: Alex Mercer">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Facción / Origen Inicial</label>
+                        <div class="input-wrapper">
+                            <select id="regFaction">
+                                <option value="">Selecciona tu origen...</option>
+                                <option value="civil">Civil de Bajos Fondos</option>
+                                <option value="netrunner">Netrunner Independiente</option>
+                                <option value="enforcer">Seguridad Corporativa</option>
+                                <option value="sindicato">Sindicato Urbano</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Clave de Acceso Segura</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="regPass" placeholder="••••••••••••">
+                        </div>
+                    </div>
+                    <button class="btn-submit" onclick="handleRegister()">REGISTRAR CIUDADANO</button>
+                </div>
+
+                <div class="status-terminal" id="statusLog">
+                    > Estado: Sistema operativo y listo para conexión neural.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sistema de Audio Web API sintético
+        let audioEnabled = true;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playClick() {
+            if (!audioEnabled) return;
+            initAudio();
+            try {
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.08);
+            } catch(e) {}
+        }
+
+        document.getElementById('audioToggle').addEventListener('click', () => {
+            audioEnabled = !audioEnabled;
+            document.getElementById('audioToggle').innerHTML = audioEnabled ? '<span>🔊 AUDIO: ON</span>' : '<span>🔇 AUDIO: OFF</span>';
+            playClick();
+        });
+
+        // Cambiar entre Pestañas
+        function switchTab(tab) {
+            playClick();
+            const loginBtn = document.querySelectorAll('.tab-btn')[0];
+            const regBtn = document.querySelectorAll('.tab-btn')[1];
+            const loginPanel = document.getElementById('loginPanel');
+            const regPanel = document.getElementById('registerPanel');
+            const statusLog = document.getElementById('statusLog');
+
+            if (tab === 'login') {
+                loginBtn.classList.add('active');
+                regBtn.classList.remove('active');
+                loginPanel.classList.add('active');
+                regPanel.classList.remove('active');
+                statusLog.innerText = "> Estado: Formulario de acceso activo.";
+            } else {
+                regBtn.classList.add('active');
+                loginBtn.classList.remove('active');
+                regPanel.classList.add('active');
+                loginPanel.classList.remove('active');
+                statusLog.innerText = "> Estado: Creación de nuevo expediente de ciudadano.";
+            }
+        }
+
+        function handleLogin() {
+            playClick();
+            const user = document.getElementById('loginUser').value.trim();
+            const statusLog = document.getElementById('statusLog');
+            if(!user) {
+                statusLog.style.borderLeftColor = '#ef4444';
+                statusLog.style.color = '#ef4444';
+                statusLog.innerText = "> Error: Credenciales incompletas o ID no válido.";
+                return;
+            }
+            statusLog.style.borderLeftColor = '#00ffff';
+            statusLog.style.color = '#00ffff';
+            statusLog.innerText = "> Estableciendo enlace neural con NΞXVORA RP...";
+            setTimeout(() => {
+                statusLog.style.borderLeftColor = '#10b981';
+                statusLog.style.color = '#10b981';
+                statusLog.innerText = "> ¡Enlace exitoso! Cargando servidor...";
+            }, 1500);
+        }
+
+        function handleRegister() {
+            playClick();
+            const user = document.getElementById('regUser').value.trim();
+            const faction = document.getElementById('regFaction').value;
+            const statusLog = document.getElementById('statusLog');
+            if(!user || !faction) {
+                statusLog.style.borderLeftColor = '#ef4444';
+                statusLog.style.color = '#ef4444';
+                statusLog.innerText = "> Error: Complete su nombre RP y seleccione facción.";
+                return;
+            }
+            statusLog.style.borderLeftColor = '#ffaa00';
+            statusLog.style.color = '#ffaa00';
+            statusLog.innerText = "> Registrando nuevo ciudadano en la red de NΞXVORA...";
+            setTimeout(() => {
+                statusLog.style.borderLeftColor = '#10b981';
+                statusLog.style.color = '#10b981';
+                statusLog.innerText = "> ¡Expediente creado con éxito! Bienvenido a la ciudad.";
+            }, 1800);
+        }
+
+        // Fondo Canvas interactivo con nodos neurales
+        const canvas = document.getElementById('neural-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        for(let i = 0; i < 40; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.6,
+                vy: (Math.random() - 0.5) * 0.6,
+                radius: Math.random() * 1.5 + 1
+            });
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'rgba(0, 255, 255, 0.4)';
+            ctx.strokeStyle = 'rgba(0, 255, 255, 0.08)';
+
+            particles.forEach((p, index) => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                for(let j = index + 1; j < particles.length; j++) {
+                    let p2 = particles[j];
+                    let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if(dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();          
+    </script>
+</body>
+</html>

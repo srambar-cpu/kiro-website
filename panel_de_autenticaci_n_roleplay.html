@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEO-VERIDIAN RP - Access Terminal</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Orbitron & Rajdhani -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            cyan: '#00f3ff',
+                            pink: '#ff0055',
+                            purple: '#8000ff',
+                            dark: '#0a0a12',
+                            card: 'rgba(15, 18, 32, 0.65)',
+                            border: 'rgba(0, 243, 255, 0.25)'
+                        }
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        rajdhani: ['Rajdhani', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'neon-cyan': '0 0 20px rgba(0, 243, 255, 0.4), inset 0 0 15px rgba(0, 243, 255, 0.2)',
+                        'neon-pink': '0 0 20px rgba(ff, 0, 85, 0.4), inset 0 0 15px rgba(ff, 0, 85, 0.2)',
+                        'cyan-glow': '0 0 15px #00f3ff',
+                        'pink-glow': '0 0 15px #ff0055'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050508;
+            font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism & Cyber Borders */
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(16, 20, 38, 0.75), rgba(8, 10, 20, 0.85));
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7);
+        }
+
+        .cyber-border-corner {
+            position: relative;
+        }
+        .cyber-border-corner::before, .cyber-border-corner::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-color: #00f3ff;
+            pointer-events: none;
+        }
+        .cyber-border-corner::before {
+            top: -2px; left: -2px;
+            border-top: 2px solid #00f3ff;
+            border-left: 2px solid #00f3ff;
+        }
+        .cyber-border-corner::after {
+            bottom: -2px; right: -2px;
+            border-bottom: 2px solid #00f3ff;
+            border-right: 2px solid #00f3ff;
+        }
+
+        /* Scanline Overlay Effect */
+        .scanline {
+            width: 100%;
+            height: 100%;
+            height: 4px;
+            background: rgba(0, 243, 255, 0.1);
+            position: absolute;
+            z-index: 10;
+            top: 0; left: 0;
+            pointer-events: none;
+            animation: scanline 8s linear infinite;
+        }
+        @keyframes scanline {
+            0% { top: -5%; }
+            100% { top: 105%; }
+        }
+
+        /* Glitch Animation for Titles */
+        .glitch-text {
+            position: relative;
+            display: inline-block;
+        }
+        .glitch-text::before, .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            clip: rect(0, 0, 0, 0);
+        }
+        .glitch-text:hover::before {
+            left: -2px;
+            text-shadow: 2px 0 #ff0055;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
+        }
+        .glitch-text:hover::after {
+            left: 2px;
+            text-shadow: -2px 0 #00f3ff;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim-2 2s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim-1 {
+            0% { clip: rect(10px, 9999px, 30px, 0); }
+            20% { clip: rect(40px, 9999px, 10px, 0); }
+            40% { clip: rect(25px, 9999px, 85px, 0); }
+            60% { clip: rect(70px, 9999px, 20px, 0); }
+            80% { clip: rect(15px, 9999px, 60px, 0); }
+            100% { clip: rect(50px, 9999px, 90px, 0); }
+        }
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(60px, 9999px, 10px, 0); }
+            20% { clip: rect(10px, 9999px, 70px, 0); }
+            40% { clip: rect(85px, 9999px, 15px, 0); }
+            60% { clip: rect(30px, 9999px, 90px, 0); }
+            80% { clip: rect(50px, 9999px, 35px, 0); }
+            100% { clip: rect(20px, 9999px, 75px, 0); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(10, 10, 18, 0.8);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00f3ff;
+            border-radius: 2px;
+        }
+
+        /* Radio Checkbox custom style */
+        .faction-card input[type="radio"]:checked + .faction-content {
+            border-color: #00f3ff;
+            background: rgba(0, 243, 255, 0.12);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-100 flex items-center justify-center p-3 md:p-6 relative">
+
+    <!-- Interactive Canvas Background -->
+    <canvas id="bg-canvas" class="fixed inset-0 w-full h-full pointer-events-auto z-0"></canvas>
+    
+    <!-- Ambient Overlay Effects -->
+    <div class="fixed inset-0 bg-radial-gradient from-transparent via-cyber-dark/60 to-cyber-dark/95 pointer-events-none z-0"></div>
+    <div class="scanline"></div>
+
+    <!-- UI Sound Control Toggle (Floating Top Right) -->
+    <div class="fixed top-5 right-5 z-50 flex items-center gap-3">
+        <button id="sound-toggle" onclick="toggleAudio()" class="px-3 py-1.5 rounded-md glass-panel border border-cyber-cyan/30 text-cyber-cyan text-xs font-orbitron flex items-center gap-2 hover:bg-cyber-cyan/10 transition">
+            <i class="fas fa-volume-up" id="sound-icon"></i>
+            <span id="sound-text">AUDIO: ON</span>
+        </button>
+        <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-md glass-panel border border-emerald-500/30 text-emerald-400 text-xs font-orbitron">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            SERVER ONLINE (842/1000)
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="relative z-10 w-full max-w-xl my-auto">
+        
+        <!-- Header / Logo Section -->
+        <div class="text-center mb-6">
+            <div class="inline-flex items-center justify-center p-3 mb-2 rounded-xl bg-cyber-cyan/10 border border-cyber-cyan/30 text-cyber-cyan text-3xl shadow-neon-cyan">
+                <i class="fa-solid fa-microchip"></i>
+            </div>
+            <h1 class="font-orbitron font-extrabold text-3xl md:text-4xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyber-cyan via-white to-cyber-pink glitch-text uppercase" data-text="NEO-VERIDIAN RP">
+                NEO-VERIDIAN RP
+            </h1>
+            <p class="text-xs md:text-sm font-rajdhani text-slate-400 tracking-widest mt-1 uppercase">
+                <i class="fa-solid fa-network-wired text-cyber-cyan mr-1"></i> Cyberpunk Roleplay Server // v3.8.2
+            </p>
+        </div>
+
+        <!-- Glass Panel Box -->
+        <div class="glass-panel rounded-2xl p-6 md:p-8 cyber-border-corner relative overflow-hidden transition-all duration-300">
+            
+            <!-- Navigation Tabs (Login / Register) -->
+            <div class="flex bg-black/40 p-1 rounded-xl border border-white/10 mb-6 relative">
+                <button id="tab-login" onclick="switchTab('login')" class="flex-1 py-2.5 font-orbitron text-xs md:text-sm tracking-wider rounded-lg transition-all duration-300 flex items-center justify-center gap-2 text-cyber-cyan font-bold bg-cyber-cyan/20 border border-cyber-cyan/40 shadow-neon-cyan">
+                    <i class="fa-solid fa-right-to-bracket"></i> INICIAR SESIÓN
+                </button>
+                <button id="tab-register" onclick="switchTab('register')" class="flex-1 py-2.5 font-orbitron text-xs md:text-sm tracking-wider rounded-lg transition-all duration-300 flex items-center justify-center gap-2 text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-user-plus"></i> REGISTRARSE
+                </button>
+            </div>
+
+            <!-- Toast / Alert Notification Container -->
+            <div id="alert-box" class="hidden mb-5 p-3 rounded-lg border text-xs font-rajdhani font-semibold flex items-center justify-between transition-all duration-300">
+                <div class="flex items-center gap-2">
+                    <i id="alert-icon" class="fas"></i>
+                    <span id="alert-msg">Mensaje del sistema</span>
+                </div>
+                <button onclick="hideAlert()" class="text-slate-400 hover:text-white"><i class="fas fa-times"></i></button>
+            </div>
+
+            <!-- ================= LOGIN FORM ================= -->
+            <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-orbitron text-cyber-cyan uppercase tracking-wider mb-1.5">
+                        <i class="fa-solid fa-id-card mr-1"></i> Usuario o Correo Electrónico
+                    </label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-500 pointer-events-none">
+                            <i class="fa-solid fa-user"></i>
+                        </span>
+                        <input type="text" id="login-user" required placeholder="Ej: CyberRunner_99" class="w-full bg-black/50 border border-white/15 focus:border-cyber-cyan focus:ring-1 focus:ring-cyber-cyan rounded-lg pl-10 pr-4 py-2.5 text-sm text-white placeholder-slate-600 focus:outline-none transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-orbitron text-cyber-cyan uppercase tracking-wider mb-1.5">
+                        <i class="fa-solid fa-key mr-1"></i> Clave de Acceso
+                    </label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-500 pointer-events-none">
+                            <i class="fa-solid fa-lock"></i>
+                        </span>
+                        <input type="password" id="login-pass" required placeholder="••••••••••••" class="w-full bg-black/50 border border-white/15 focus:border-cyber-cyan focus:ring-1 focus:ring-cyber-cyan rounded-lg pl-10 pr-10 py-2.5 text-sm text-white placeholder-slate-600 focus:outline-none transition">
+                        <button type="button" onclick="togglePassword('login-pass', this)" class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-500 hover:text-cyber-cyan">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between text-xs font-rajdhani pt-1">
+                    <label class="flex items-center gap-2 cursor-pointer text-slate-300 hover:text-white">
+                        <input type="checkbox" class="rounded bg-black/60 border-white/20 text-cyber-cyan focus:ring-cyber-cyan focus:ring-offset-0">
+                        <span>Recordar credenciales</span>
+                    </label>
+                    <a href="#" onclick="triggerForgotPassword(event)" class="text-cyber-cyan hover:underline hover:text-cyan-300">¿Olvidaste tu clave?</a>
+                </div>
+
+                <button type="submit" class="w-full mt-2 py-3.5 px-4 bg-gradient-to-r from-cyber-cyan to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-orbitron font-extrabold text-sm tracking-widest rounded-lg shadow-neon-cyan transition-all transform hover:-translate-y-0.5 active:translate-y-0 uppercase flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-plug"></i> INGRESAR AL SERVIDOR
+                </button>
+            </form>
+
+
+            <!-- ================= REGISTER FORM ================= -->
+            <form id="form-register" onsubmit="handleRegister(event)" class="space-y-4 hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-orbitron text-cyber-pink uppercase tracking-wider mb-1.5">
+                            <i class="fa-solid fa-user-gear mr-1"></i> Nombre de Personaje (IC)
+                        </label>
+                        <input type="text" id="reg-name" required placeholder="Ej: Viktor_Vance" class="w-full bg-black/50 border border-white/15 focus:border-cyber-pink focus:ring-1 focus:ring-cyber-pink rounded-lg px-3.5 py-2.5 text-sm text-white placeholder-slate-600 focus:outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-orbitron text-cyber-pink uppercase tracking-wider mb-1.5">
+                            <i class="fa-solid fa-envelope mr-1"></i> Correo Electrónico
+                        </label>
+                        <input type="email" id="reg-email" required placeholder="nombre@red.com" class="w-full bg-black/50 border border-white/15 focus:border-cyber-pink focus:ring-1 focus:ring-cyber-pink rounded-lg px-3.5 py-2.5 text-sm text-white placeholder-slate-600 focus:outline-none transition">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-orbitron text-cyber-pink uppercase tracking-wider mb-1.5">
+                            <i class="fa-solid fa-lock mr-1"></i> Contraseña
+                        </label>
+                        <div class="relative">
+                            <input type="password" id="reg-pass" oninput="checkPasswordStrength(this.value)" required placeholder="••••••••••••" class="w-full bg-black/50 border border-white/15 focus:border-cyber-pink focus:ring-1 focus:ring-cyber-pink rounded-lg pl-3.5 pr-10 py-2.5 text-sm text-white placeholder-slate-600 focus:outline-none transition">
+                            <button type="button" onclick="togglePassword('reg-pass', this)" class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-500 hover:text-cyber-pink">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-orbitron text-cyber-pink uppercase tracking-wider mb-1.5">
+                            <i class="fa-solid fa-shield-halved mr-1"></i> Confirmar
+                        </label>
+                        <div class="relative">
+                            <input type="password" id="reg-pass-confirm" required placeholder="••••••••••••" class="w-full bg-black/50 border border-white/15 focus:border-cyber-pink focus:ring-1 focus:ring-cyber-pink rounded-lg pl-3.5 pr-10 py-2.5 text-sm text-white placeholder-slate-600 focus:outline-none transition">
+                            <button type="button" onclick="togglePassword('reg-pass-confirm', this)" class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-500 hover:text-cyber-pink">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Password Strength Meter -->
+                <div class="space-y-1">
+                    <div class="flex justify-between text-[11px] font-orbitron text-slate-400">
+                        <span>Fuerza del Cifrado:</span>
+                        <span id="strength-text" class="text-slate-500">Ninguna</span>
+                    </div>
+                    <div class="w-full h-1.5 bg-black/60 rounded-full overflow-hidden flex gap-1">
+                        <div id="str-1" class="h-full w-1/4 bg-slate-700 transition-all"></div>
+                        <div id="str-2" class="h-full w-1/4 bg-slate-700 transition-all"></div>
+                        <div id="str-3" class="h-full w-1/4 bg-slate-700 transition-all"></div>
+                        <div id="str-4" class="h-full w-1/4 bg-slate-700 transition-all"></div>
+                    </div>
+                </div>
+
+                <!-- RP Faction/Background Selection -->
+                <div>
+                    <label class="block text-xs font-orbitron text-cyber-pink uppercase tracking-wider mb-2">
+                        <i class="fa-solid fa-dna mr-1"></i> Origen del Personaje / Facción
+                    </label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="faction-card cursor-pointer">
+                            <input type="radio" name="faction" value="Netrunner" checked class="hidden">
+                            <div class="faction-content p-2.5 rounded-lg border border-white/10 bg-black/30 hover:border-cyber-cyan/50 transition flex items-center gap-2.5">
+                                <i class="fa-solid fa-laptop-code text-cyber-cyan text-base"></i>
+                                <div>
+                                    <div class="text-xs font-orbitron font-bold text-white">CYBER RUNNER</div>
+                                    <div class="text-[10px] text-slate-400">Hacker / Mercenario</div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="faction-card cursor-pointer">
+                            <input type="radio" name="faction" value="Enforcer" class="hidden">
+                            <div class="faction-content p-2.5 rounded-lg border border-white/10 bg-black/30 hover:border-cyber-cyan/50 transition flex items-center gap-2.5">
+                                <i class="fa-solid fa-shield-virus text-purple-400 text-base"></i>
+                                <div>
+                                    <div class="text-xs font-orbitron font-bold text-white">ENFORCER</div>
+                                    <div class="text-[10px] text-slate-400">Seguridad / Ley</div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="faction-card cursor-pointer">
+                            <input type="radio" name="faction" value="Corpo" class="hidden">
+                            <div class="faction-content p-2.5 rounded-lg border border-white/10 bg-black/30 hover:border-cyber-cyan/50 transition flex items-center gap-2.5">
+                                <i class="fa-solid fa-building-columns text-emerald-400 text-base"></i>
+                                <div>
+                                    <div class="text-xs font-orbitron font-bold text-white">TECH-CORPO</div>
+                                    <div class="text-[10px] text-slate-400">Empresario / Élite</div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="faction-card cursor-pointer">
+                            <input type="radio" name="faction" value="Nomad" class="hidden">
+                            <div class="faction-content p-2.5 rounded-lg border border-white/10 bg-black/30 hover:border-cyber-cyan/50 transition flex items-center gap-2.5">
+                                <i class="fa-solid fa-[#ff0055] fa-wrench text-cyber-pink text-base"></i>
+                                <div>
+                                    <div class="text-xs font-orbitron font-bold text-white">SHADOW NOMAD</div>
+                                    <div class="text-[10px] text-slate-400">Mecánico / Paria</div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Rules acceptance -->
+                <div class="pt-1">
+                    <label class="flex items-start gap-2 cursor-pointer text-xs font-rajdhani text-slate-300">
+                        <input type="checkbox" id="reg-rules" required class="mt-0.5 rounded bg-black/60 border-white/20 text-cyber-pink focus:ring-cyber-pink focus:ring-offset-0">
+                        <span>Acepto la normativa de Roleplay (In-Character/Out-Of-Character) y términos de la ciudad.</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="w-full mt-2 py-3.5 px-4 bg-gradient-to-r from-cyber-pink to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-orbitron font-extrabold text-sm tracking-widest rounded-lg shadow-neon-pink transition-all transform hover:-translate-y-0.5 active:translate-y-0 uppercase flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-id-card"></i> CREAR PERSONAJE & CONECTAR
+                </button>
+            </form>
+
+            <!-- ================= LOADING / CONNECTING OVERLAY ================= -->
+            <div id="loading-screen" class="hidden absolute inset-0 glass-panel z-30 bg-cyber-dark/95 flex flex-col items-center justify-center p-6 text-center">
+                <div class="relative w-20 h-20 mb-4 flex items-center justify-center">
+                    <div class="absolute inset-0 rounded-full border-4 border-cyber-cyan/20 border-t-cyber-cyan animate-spin"></div>
+                    <div class="absolute inset-2 rounded-full border-4 border-cyber-pink/20 border-b-cyber-pink animate-spin" style="animation-direction: reverse; animation-duration: 1.5s;"></div>
+                    <i class="fa-solid fa-terminal text-2xl text-cyber-cyan"></i>
+                </div>
+                
+                <h3 id="loading-status" class="font-orbitron font-bold text-lg text-white tracking-wider mb-2">ESTABLECIENDO ENLACE NEURAL...</h3>
+                <p id="loading-sub" class="font-rajdhani text-xs text-cyber-cyan mb-4 font-mono">Sincronizando identidad IC con servidor...</p>
+                
+                <!-- Progress Bar -->
+                <div class="w-full bg-black/60 rounded-full h-2.5 overflow-hidden border border-white/10 mb-2">
+                    <div id="progress-bar" class="bg-gradient-to-r from-cyber-cyan to-cyber-pink h-full w-0 transition-all duration-300"></div>
+                </div>
+                <div class="w-full flex justify-between text-[10px] font-mono text-slate-400">
+                    <span>STATUS: LOADING</span>
+                    <span id="progress-percent">0%</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer Information -->
+        <div class="mt-6 text-center text-xs text-slate-500 font-rajdhani flex items-center justify-between px-2">
+            <span>&copy; 2026 NEO-VERIDIAN RP. Todos los derechos reservados.</span>
+            <div class="flex gap-4">
+                <a href="#" onclick="showInfoModal('Reglas', '1. Respetar el entorno RP.\n2. No Metagaming / Powergaming.\n3. Valorar la vida de tu personaje.')" class="hover:text-cyber-cyan transition">Reglas</a>
+                <a href="#" onclick="showInfoModal('Discord', 'Únete a nuestra comunidad en Discord: discord.gg/neoveridian-rp')" class="hover:text-cyber-cyan transition">Discord</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Info Modal -->
+    <div id="info-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="glass-panel border-cyber-cyan rounded-xl p-6 max-w-md w-full cyber-border-corner">
+            <h3 id="modal-title" class="font-orbitron font-bold text-lg text-cyber-cyan mb-3">TITULO</h3>
+            <p id="modal-body" class="font-rajdhani text-sm text-slate-300 whitespace-pre-line mb-6"></p>
+            <button onclick="closeModal()" class="w-full py-2 bg-cyber-cyan/20 border border-cyber-cyan text-cyber-cyan font-orbitron text-xs rounded hover:bg-cyber-cyan/30 transition">
+                ENTENDIDO
+            </button>
+        </div>
+    </div>
+
+    <!-- Application Script -->
+    <script>
+        /* ================= AUDIO SYNTHESIZER (No external files needed) ================= */
+        let audioEnabled = true;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playSynthSound(freq, type, duration) {
+            if (!audioEnabled) return;
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type || 'sine';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {}
+        }
+
+        function playClickSound() { playSynthSound(800, 'sine', 0.08); }
+        function playSuccessSound() { 
+            playSynthSound(523.25, 'triangle', 0.1); 
+            setTimeout(() => playSynthSound(659.25, 'triangle', 0.15), 80);
+        }
+        function playErrorSound() {
+            playSynthSound(200, 'sawtooth', 0.2);
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            const btnText = document.getElementById('sound-text');
+            const btnIcon = document.getElementById('sound-icon');
+            if (audioEnabled) {
+                btnText.innerText = 'AUDIO: ON';
+                btnIcon.className = 'fas fa-volume-up';
+                playClickSound();
+            } else {
+                btnText.innerText = 'AUDIO: OFF';
+                btnIcon.className = 'fas fa-volume-mute';
+            }
+        }
+
+        /* ================= TAB SWITCHING LOGIC ================= */
+        function switchTab(tab) {
+            playClickSound();
+            const loginForm = document.getElementById('form-login');
+            const regForm = document.getElementById('form-register');
+            const tabLogin = document.getElementById('tab-login');
+            const tabReg = document.getElementById('tab-register');
+
+            hideAlert();
+
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden');
+                regForm.classList.add('hidden');
+                
+                tabLogin.className = "flex-1 py-2.5 font-orbitron text-xs md:text-sm tracking-wider rounded-lg transition-all duration-300 flex items-center justify-center gap-2 text-cyber-cyan font-bold bg-cyber-cyan/20 border border-cyber-cyan/40 shadow-neon-cyan";
+                tabReg.className = "flex-1 py-2.5 font-orbitron text-xs md:text-sm tracking-wider rounded-lg transition-all duration-300 flex items-center justify-center gap-2 text-slate-400 hover:text-white";
+            } else {
+                loginForm.classList.add('hidden');
+                regForm.classList.remove('hidden');
+
+                tabReg.className = "flex-1 py-2.5 font-orbitron text-xs md:text-sm tracking-wider rounded-lg transition-all duration-300 flex items-center justify-center gap-2 text-cyber-pink font-bold bg-cyber-pink/20 border border-cyber-pink/40 shadow-neon-pink";
+                tabLogin.className = "flex-1 py-2.5 font-orbitron text-xs md:text-sm tracking-wider rounded-lg transition-all duration-300 flex items-center justify-center gap-2 text-slate-400 hover:text-white";
+            }
+        }
+
+        /* ================= PASSWORD VISIBILITY TOGGLE ================= */
+        function togglePassword(inputId, btn) {
+            playClickSound();
+            const input = document.getElementById(inputId);
+            const icon = btn.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fa-solid fa-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'fa-solid fa-eye';
+            }
+        }
+
+        /* ================= PASSWORD STRENGTH CHECKER ================= */
+        function checkPasswordStrength(val) {
+            const str1 = document.getElementById('str-1');
+            const str2 = document.getElementById('str-2');
+            const str3 = document.getElementById('str-3');
+            const str4 = document.getElementById('str-4');
+            const text = document.getElementById('strength-text');
+
+            let score = 0;
+            if (val.length >= 6) score++;
+            if (val.length >= 10) score++;
+            if (/[A-Z]/.test(val) && /[0-9]/.test(val)) score++;
+            if (/[^A-Za-z0-9]/.test(val)) score++;
+
+            // Reset
+            [str1, str2, str3, str4].forEach(e => e.className = 'h-full w-1/4 bg-slate-700 transition-all');
+
+            if (val.length === 0) {
+                text.innerText = 'Ninguna';
+                text.className = 'text-slate-500';
+                return;
+            }
+
+            if (score <= 1) {
+                str1.className = 'h-full w-1/4 bg-red-500 transition-all';
+                text.innerText = 'Débil / Vulnerable';
+                text.className = 'text-red-400';
+            } else if (score === 2) {
+                str1.className = str2.className = 'h-full w-1/4 bg-yellow-500 transition-all';
+                text.innerText = 'Media';
+                text.className = 'text-yellow-400';
+            } else if (score === 3) {
+                str1.className = str2.className = str3.className = 'h-full w-1/4 bg-cyan-400 transition-all';
+                text.innerText = 'Fuerte';
+                text.className = 'text-cyan-400';
+            } else {
+                str1.className = str2.className = str3.className = str4.className = 'h-full w-1/4 bg-emerald-400 transition-all';
+                text.innerText = 'Encriptación Máxima';
+                text.className = 'text-emerald-400';
+            }
+        }
+
+        /* ================= ALERT SYSTEM ================= */
+        function showAlert(msg, type = 'error') {
+            const alertBox = document.getElementById('alert-box');
+            const alertMsg = document.getElementById('alert-msg');
+            const alertIcon = document.getElementById('alert-icon');
+
+            alertMsg.innerText = msg;
+            alertBox.classList.remove('hidden');
+
+            if (type === 'error') {
+                playErrorSound();
+                alertBox.className = "mb-5 p-3 rounded-lg border text-xs font-rajdhani font-semibold flex items-center justify-between transition-all duration-300 bg-red-500/10 border-red-500/40 text-red-400";
+                alertIcon.className = "fas fa-exclamation-triangle text-red-400";
+            } else {
+                playSuccessSound();
+                alertBox.className = "mb-5 p-3 rounded-lg border text-xs font-rajdhani font-semibold flex items-center justify-between transition-all duration-300 bg-emerald-500/10 border-emerald-500/40 text-emerald-400";
+                alertIcon.className = "fas fa-check-circle text-emerald-400";
+            }
+        }
+
+        function hideAlert() {
+            document.getElementById('alert-box').classList.add('hidden');
+        }
+
+        /* ================= FORM HANDLERS & SIMULATION ================= */
+        function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('login-user').value;
+            hideAlert();
+
+            startConnectionSimulation(`Iniciando sesión como ${user}...`, () => {
+                showAlert(`¡Bienvenido de nuevo, ${user}! Cargando entorno de juego...`, 'success');
+            });
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value;
+            const pass = document.getElementById('reg-pass').value;
+            const passConf = document.getElementById('reg-pass-confirm').value;
+
+            // Simple validation
+            if (!name.includes('_')) {
+                showAlert('El nombre IC debe seguir el formato Nombre_Apellido (Ej: Alex_Mercer).', 'error');
+                return;
+            }
+
+            if (pass !== passConf) {
+                showAlert('Las contraseñas no coinciden. Verifica los datos.', 'error');
+                return;
+            }
+
+            hideAlert();
+            startConnectionSimulation(`Registrando ciudadano ${name}...`, () => {
+                showAlert(`¡Personaje ${name} creado con éxito! Iniciando enlace neural...`, 'success');
+            });
+        }
+
+        function triggerForgotPassword(e) {
+            e.preventDefault();
+            playClickSound();
+            showAlert('Enlace de recuperación enviado al correo registrado (Simulación).', 'success');
+        }
+
+        function startConnectionSimulation(statusText, onComplete) {
+            playClickSound();
+            const loadingScreen = document.getElementById('loading-screen');
+            const loadingStatus = document.getElementById('loading-status');
+            const progressBar = document.getElementById('progress-bar');
+            const progressPercent = document.getElementById('progress-percent');
+
+            loadingStatus.innerText = statusText;
+            loadingScreen.classList.remove('hidden');
+
+            let progress = 0;
+            progressBar.style.width = '0%';
+            progressPercent.innerText = '0%';
+
+            const interval = setInterval(() => {
+                progress += Math.floor(Math.random() * 15) + 5;
+                if (progress > 100) progress = 100;
+
+                progressBar.style.width = `${progress}%`;
+                progressPercent.innerText = `${progress}%`;
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loadingScreen.classList.add('hidden');
+                        if (onComplete) onComplete();
+                    }, 500);
+                }
+            }, 180);
+        }
+
+        /* ================= MODAL HANDLERS ================= */
+        function showInfoModal(title, text) {
+            playClickSound();
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-body').innerText = text;
+            document.getElementById('info-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            playClickSound();
+            document.getElementById('info-modal').classList.add('hidden');
+        }
+
+        /* ================= CANVAS DYNAMIC BACKGROUND ================= */
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        let mouse = { x: null, y: null, radius: 120 };
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.8;
+                this.vy = (Math.random() - 0.5) * 0.8;
+                this.size = Math.random() * 2 + 1;
+                this.color = Math.random() > 0.4 ? '#00f3ff' : '#ff0055';
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.shadowBlur = 0; // reset
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+
+                // Mouse interaction
+                if (mouse.x && mouse.y) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < mouse.radius) {
+                        this.x -= dx * 0.02;
+                        this.y -= dy * 0.02;
+                    }
+                }
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.min(Math.floor((canvas.width * canvas.height) / 10000), 100);
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Connect lines
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a + 1; b < particles.length; b++) {
+                    let dx = particles[a].x - particles[b].x;
+                    let dy = particles[a].y - particles[b].y;
+                    let dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 110) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.strokeStyle = `rgba(0, 243, 255, ${0.25 - dist / 440})`;
+                        ctx.lineWidth = 0.6;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animateCanvas);
+        }
+
+        // Initialize Canvas on page load
+        window.onload = () => {
+            resizeCanvas();
+            animateCanvas();
+        };
+    </script>
+</body>
+</html>
